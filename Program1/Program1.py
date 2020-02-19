@@ -1,6 +1,19 @@
 import nltk
 from CorpusReader_TFIDF import CorpusReader_TFIDF
-from nltk.corpus import brown
-from nltk.corpus import state_union
+import nltk.corpus
+from nltk import stem
+import time
 
-print(len(brown.words()))
+start_time = time.time()
+ps = stem.PorterStemmer()
+
+brown = nltk.corpus.brown
+stateOfTheUnion = nltk.corpus.state_union
+
+brownReader = CorpusReader_TFIDF(brown, tf='raw', idf='base', stopword='default', stemmer=ps, ignorecase='yes')
+print(brownReader.cosine_sim(['ca03', 'ca04']))
+
+# stateReader = CorpusReader_TFIDF(stateOfTheUnion, 'tf', 'idf')
+# print(stateReader.fileids())
+
+print("---Program took %s seconds ---" % (time.time() - start_time))
